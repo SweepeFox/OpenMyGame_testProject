@@ -169,12 +169,14 @@ public class GameView : MonoBehaviour
             }
         }
 
-        isBlockSwaping = swapCellsStatus == HandlerStatus.IN_PROGRESS;
-
-        if (_destroyCellsHandler.Handle() == HandlerStatus.FINISHED)
+        // isBlockSwaping = swapCellsStatus == HandlerStatus.IN_PROGRESS;
+        var destroyCellsStatus = _destroyCellsHandler.Handle();
+        if (destroyCellsStatus == HandlerStatus.FINISHED)
         {
             _viewModel.CheckFallingCells();
         }
+
+        isBlockSwaping = swapCellsStatus == HandlerStatus.IN_PROGRESS || destroyCellsStatus == HandlerStatus.IN_PROGRESS;
     }
 
     private void OnDestroy()
