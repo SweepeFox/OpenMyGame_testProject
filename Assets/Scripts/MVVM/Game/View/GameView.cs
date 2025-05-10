@@ -186,6 +186,8 @@ public class GameView : MonoBehaviour
         _viewModel.MoveCellsView.OnChanged -= OnMoveCellsChanged;
         _viewModel.DestroyCellsView.OnChanged -= OnDestroyCellsChanged;
         _swipeDetectorView.SwipeParams.OnChanged -= OnSwipe;
+
+        _viewModel.Dispose();
     }
     #endregion
 }

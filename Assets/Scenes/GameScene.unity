@@ -234,8 +234,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76bbede42bffe6a4ba629a028942374f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameViewPrefab: {fileID: 7557405993795597421, guid: 4009576016409a44e994b01ed61c1dda, type: 3}
+  _gameUIViewPrefab: {fileID: 1486336045286321091, guid: eac9e2a1b262c2740ba4eeb36f01cb02, type: 3}
   _cellsConfigData: {fileID: 11400000, guid: b03b9da84a561b745ad6536ae6cd37d9, type: 2}
-  _viewPrefab: {fileID: 7557405993795597421, guid: 4009576016409a44e994b01ed61c1dda, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

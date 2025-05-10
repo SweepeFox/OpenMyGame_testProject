@@ -25,4 +25,9 @@ public class SwipeDetectorView : MonoBehaviour, IPointerDownHandler, IPointerUpH
     {
         _viewModel.MoveSwipe(eventData.position);
     }
+
+    private void OnDestroy()
+    {
+        _viewModel.Dispose();
+    }
 }

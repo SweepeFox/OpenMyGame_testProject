@@ -27,4 +27,9 @@ public class CellView : MonoBehaviour
     {
         _image.enabled = false;
     }
+
+    private void OnDestroy()
+    {
+        _viewModel.Dispose();
+    }
 }

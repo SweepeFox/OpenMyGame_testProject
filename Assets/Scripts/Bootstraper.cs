@@ -2,34 +2,66 @@ using UnityEngine;
 
 public class Bootstraper : MonoBehaviour
 {
+    [SerializeField] private GameView _gameViewPrefab;
+    [SerializeField] private GameUIView _gameUIViewPrefab;
     [SerializeField] private CellsConfigData _cellsConfigData;
-    [SerializeField] private GameView _viewPrefab;
 
+    private GameView _gameView;
+    private GameUIView _gameUIView;
     private LevelLoader _levelLoader;
-    private GameViewModel _viewModel;
 
-    public async void Boot()
+    private int _currentLevelIndex = 0;
+
+    public void Boot()
+    {
+        var level = _levelLoader.LevelsData[_currentLevelIndex];
+        var cellsFactory = new CellsFactory(_cellsConfigData);
+
+        var model = new GameModel(level.field);
+        var viewModel = new GameViewModel(model, level.rows, level.columns);
+
+        _gameView = Instantiate(_gameViewPrefab);
+        _gameView.Init(viewModel, cellsFactory);
+
+        var uiModel = new GameUIModel();
+        var uiViewModel = new GameUIViewModel(uiModel, Restart, NextLevel);
+        _gameUIView = Instantiate(_gameUIViewPrefab);
+        _gameUIView.Init(uiViewModel);
+    }
+
+    public void Restart()
+    {
+        Destroy(_gameView.gameObject);
+        Destroy(_gameUIView.gameObject);
+
+        Boot();
+    }
+
+    public void NextLevel()
+    {
+        _currentLevelIndex = (_currentLevelIndex + 1) % _levelLoader.LevelsData.Length;
+        Restart();
+    }
+
+    #region MonoBehaviour
+    private async void Awake()
     {
         _levelLoader = new LevelLoader();
         await _levelLoader.LoadLevelsJson();
 
-        var currentLevel = _levelLoader.LevelsData[1];
-        var cellsFactory = new CellsFactory(_cellsConfigData);
-
-        var model = new GameModel(currentLevel.field);
-        _viewModel = new GameViewModel(model, currentLevel.rows, currentLevel.columns);
-
-        var view = Instantiate(_viewPrefab);
-        view.Init(_viewModel, cellsFactory);
-    }
-
-    private void Awake()
-    {
         Boot();
     }
 
-    private void OnDestroy()
+    private void Update()
     {
-        _viewModel.Dispose();
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            Restart();
+        }
+        else if (Input.GetKeyUp(KeyCode.N))
+        {
+            NextLevel();
+        }
     }
+    #endregion
 }

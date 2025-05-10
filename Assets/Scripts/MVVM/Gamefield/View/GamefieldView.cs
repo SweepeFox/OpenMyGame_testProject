@@ -36,4 +36,9 @@ public class GamefieldView : MonoBehaviour
     {
         _gridLayoutGroup.enabled = false;
     }
+
+    private void OnDestroy()
+    {
+        _viewModel.Dispose();
+    }
 }
