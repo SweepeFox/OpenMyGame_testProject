@@ -16,6 +16,17 @@ public class MovingCellsViewModel
 
     public List<MoveCellParams> MoveCell(CellView cell, SwipeDirection direction)
     {
+        // note: if cell is empty (broken) or already moving, return null
+        if (_model.Field.Value[cell.Row, cell.Column] == 0)
+        {
+            return null;
+        }
+
+        if (IsMovingCell(cell.Row, cell.Column))
+        {
+            return null;
+        }
+
         int row1 = cell.Row;
         int column1 = cell.Column;
 
@@ -38,12 +49,22 @@ public class MovingCellsViewModel
                 break;
         }
 
+        if (_model.Field.Value[row1, column1] == 0)
+        {
+            return null;
+        }
+
         if (row1 < 0 || row1 >= _rows || column1 < 0 || column1 >= _columns)
         {
             return null;
         }
 
         if (row1 == cell.Row && column1 == cell.Column)
+        {
+            return null;
+        }
+
+        if (IsMovingCell(row1, column1))
         {
             return null;
         }
@@ -66,5 +87,18 @@ public class MovingCellsViewModel
                 columnIndex2 = column1
             }
         };
+    }
+
+    private bool IsMovingCell(int row, int column)
+    {
+        if (_model.MoveCells.Value == null)
+        {
+            return false;
+        }
+
+        return _model.MoveCells.Value.Exists(x => 
+            x.rowIndex1 == row && x.columnIndex1 == column ||
+            x.rowIndex2 == row && x.columnIndex2 == column
+        );
     }
 }

@@ -5,7 +5,7 @@ public class SwapCellsViewHandler
 {
     private readonly List<MoveCellsViewParams> _cellsForSwap = new List<MoveCellsViewParams>();
 
-    public HandlerStatus Handle()
+    public HandlerStatus Handle(GameViewModel viewModel)
     {
         if (_cellsForSwap.Count == 0)
         {
@@ -23,6 +23,9 @@ public class SwapCellsViewHandler
             if (swapTime >= 1f)
             {
                 _cellsForSwap.RemoveAt(i);
+
+                viewModel.RemoveMoveCellFromModel(data.Cell1.Row, data.Cell1.Column);
+                viewModel.RemoveMoveCellFromModel(data.Cell2.Row, data.Cell2.Column);
 
                 if (_cellsForSwap.Count == 0)
                 {

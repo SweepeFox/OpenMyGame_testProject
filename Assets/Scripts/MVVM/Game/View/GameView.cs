@@ -21,8 +21,6 @@ public class GameView : MonoBehaviour
     private GameViewModel _viewModel;
     private CellView[,] _cells;
 
-    private bool isBlockSwaping;
-
     public void Init(GameViewModel viewModel, CellsFactory cellsFactory)
     {
         _viewModel = viewModel;
@@ -128,11 +126,6 @@ public class GameView : MonoBehaviour
 
     private void OnSwipe(SwipeParams swipeParams)
     {
-        if (isBlockSwaping)
-        {
-            return;
-        }
-
         PointerEventData eventData = new PointerEventData(EventSystem.current);
         eventData.position = swipeParams.startPosition;
 
@@ -160,7 +153,7 @@ public class GameView : MonoBehaviour
     #region MonoBehaviour
     private void Update()
     {
-        var swapCellsStatus = _swalCellsHandler.Handle();
+        var swapCellsStatus = _swalCellsHandler.Handle(_viewModel);
         if (swapCellsStatus == HandlerStatus.FINISHED)
         {
             if (!_viewModel.CheckFallingCells())
@@ -174,8 +167,6 @@ public class GameView : MonoBehaviour
         {
             _viewModel.CheckFallingCells();
         }
-
-        isBlockSwaping = swapCellsStatus == HandlerStatus.IN_PROGRESS || destroyCellsStatus == HandlerStatus.IN_PROGRESS;
     }
 
     private void OnDestroy()

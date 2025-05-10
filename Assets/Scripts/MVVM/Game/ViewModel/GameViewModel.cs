@@ -78,6 +78,11 @@ public class GameViewModel
         }
     }
 
+    public void RemoveMoveCellFromModel(int row, int column)
+    {
+        _model.MoveCells.Value.RemoveAll(x => x.rowIndex1 == row && x.columnIndex1 == column);
+    }
+
     public void Dispose()
     {
         _model.Field.OnChanged -= OnModelFieldChanged;
