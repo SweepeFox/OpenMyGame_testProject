@@ -109,7 +109,7 @@ public class GameView : MonoBehaviour
     {
         foreach (var destroyCellData in destroyCells)
         {
-            var cell = _cells[destroyCellData.rowIndex, destroyCellData.columnIndex];
+            var cell = _cells[destroyCellData.row, destroyCellData.column];
             if (cell != null)
             {
                 _destroyCellsHandler.AddCellForDestroy(new DestroyCellViewParams
@@ -165,6 +165,24 @@ public class GameView : MonoBehaviour
         var destroyCellsStatus = _destroyCellsHandler.Handle();
         if (destroyCellsStatus == HandlerStatus.FINISHED)
         {
+            var notEmptyBlocksCount = 0;
+            for (int row = 0; row < _cells.GetLength(0); row++)
+            {
+                for (int col = 0; col < _cells.GetLength(1); col++)
+                {
+                    if (_viewModel.FieldView.Value[row, col] != 0)
+                    {
+                        notEmptyBlocksCount++;
+                    }
+                }
+            }
+
+            if (notEmptyBlocksCount == 0)
+            {
+                _viewModel.OnLevelCompleted();
+                return;
+            }
+
             _viewModel.CheckFallingCells();
         }
     }

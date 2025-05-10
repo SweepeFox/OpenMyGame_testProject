@@ -18,7 +18,7 @@ public class Bootstraper : MonoBehaviour
         var cellsFactory = new CellsFactory(_cellsConfigData);
 
         var model = new GameModel(level.field);
-        var viewModel = new GameViewModel(model);
+        var viewModel = new GameViewModel(model, NextLevel);
 
         _gameView = Instantiate(_gameViewPrefab);
         _gameView.Init(viewModel, cellsFactory);

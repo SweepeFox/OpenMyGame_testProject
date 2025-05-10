@@ -17,7 +17,8 @@ public class MovingCellsViewModel
     public List<MoveCellParams> MoveCell(CellView cell, SwipeDirection direction)
     {
         // note: if cell is empty (broken) or already moving, return null
-        if (_model.Field.Value[cell.Row, cell.Column] == 0)
+        var isCell1Destroying = _model.DestroyCells.Value != null && _model.DestroyCells.Value.Exists(x => x.row == cell.Row && x.column == cell.Column);
+        if (isCell1Destroying)
         {
             return null;
         }
@@ -49,12 +50,14 @@ public class MovingCellsViewModel
                 break;
         }
 
-        if (_model.Field.Value[row1, column1] == 0)
+        var isCell2Destroying = _model.DestroyCells.Value != null && _model.DestroyCells.Value.Exists(x => x.row == row1 && x.column == column1);    
+        if (isCell2Destroying)
         {
             return null;
         }
 
-        if (row1 < 0 || row1 >= _rows || column1 < 0 || column1 >= _columns)
+        var isBorder = row1 < 0 || row1 >= _rows || column1 < 0 || column1 >= _columns;
+        if (isBorder)
         {
             return null;
         }

@@ -24,7 +24,7 @@ public class CombinatingCellsViewModel
 
         for (int i = 0; i < destroyCells.Count; i++)
         {
-            fieldCopy[destroyCells[i].rowIndex, destroyCells[i].columnIndex] = 0;
+            fieldCopy[destroyCells[i].row, destroyCells[i].column] = 0;
         }
 
         _model.Field.Value = fieldCopy;
@@ -45,9 +45,9 @@ public class CombinatingCellsViewModel
                     field[i, j] == field[i + (isHorizontal ? 0 : 2), j + (isHorizontal ? 2 : 0)] &&
                     field[i, j] != 0)
                 {
-                    destroyCells.Add(new DestroyCellParams { rowIndex = i, columnIndex = j });
-                    destroyCells.Add(new DestroyCellParams { rowIndex = i + (isHorizontal ? 0 : 1), columnIndex = j + (isHorizontal ? 1 : 0) });
-                    destroyCells.Add(new DestroyCellParams { rowIndex = i + (isHorizontal ? 0 : 2), columnIndex = j + (isHorizontal ? 2 : 0) });
+                    destroyCells.Add(new DestroyCellParams { row = i, column = j });
+                    destroyCells.Add(new DestroyCellParams { row = i + (isHorizontal ? 0 : 1), column = j + (isHorizontal ? 1 : 0) });
+                    destroyCells.Add(new DestroyCellParams { row = i + (isHorizontal ? 0 : 2), column = j + (isHorizontal ? 2 : 0) });
                 }
             }
         }

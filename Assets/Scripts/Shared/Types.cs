@@ -41,8 +41,8 @@ public class DestroyCellViewParams
 
 public class DestroyCellParams
 {
-    public int rowIndex;
-    public int columnIndex;
+    public int row;
+    public int column;
 }
 
 public class MoveCellParams

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GameViewModel
 {
@@ -15,10 +16,12 @@ public class GameViewModel
     public int Columns { get; private set; }
 
     private GameModel _model;
+    private Action _onLevelCompletedCallback;
 
-    public GameViewModel(GameModel model)
+    public GameViewModel(GameModel model, Action onLevelCompletedCallback)
     {
         _model = model;
+        _onLevelCompletedCallback = onLevelCompletedCallback;
 
         Rows = model.Field.Value.GetLength(0);
         Columns = model.Field.Value.GetLength(1);
@@ -81,6 +84,11 @@ public class GameViewModel
     public void RemoveMoveCellFromModel(int row, int column)
     {
         _model.MoveCells.Value.RemoveAll(x => x.rowIndex1 == row && x.columnIndex1 == column);
+    }
+
+    public void OnLevelCompleted()
+    {
+        _onLevelCompletedCallback?.Invoke();
     }
 
     public void Dispose()

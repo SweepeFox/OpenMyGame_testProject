@@ -4,10 +4,11 @@ using UnityEngine;
 public class SwapCellsViewHandler
 {
     private readonly List<MoveCellsViewParams> _cellsForSwap = new List<MoveCellsViewParams>();
+        private readonly List<MoveCellsViewParams> _cellsForSwapQeueu = new List<MoveCellsViewParams>();
 
     public HandlerStatus Handle(GameViewModel viewModel)
     {
-        if (_cellsForSwap.Count == 0)
+        if (_cellsForSwapQeueu.Count == 0 && _cellsForSwap.Count == 0)
         {
             return HandlerStatus.NONE;
         }
@@ -34,11 +35,14 @@ public class SwapCellsViewHandler
             }
         }
 
+        _cellsForSwap.AddRange(_cellsForSwapQeueu);
+        _cellsForSwapQeueu.Clear();
+
         return HandlerStatus.IN_PROGRESS;
     }
 
     public void AddCellsForSwap(MoveCellsViewParams newCellsForSwap)
     {
-        _cellsForSwap.Add(newCellsForSwap);
+        _cellsForSwapQeueu.Add(newCellsForSwap);
     }
 }
