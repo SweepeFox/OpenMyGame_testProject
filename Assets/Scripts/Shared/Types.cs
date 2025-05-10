@@ -61,7 +61,5 @@ public class SwipeParams
 
 public class LevelParams
 {
-    public int rows;
-    public int columns;
     public int[,] field;
 }

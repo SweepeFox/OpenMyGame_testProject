@@ -16,17 +16,17 @@ public class GameViewModel
 
     private GameModel _model;
 
-    public GameViewModel(GameModel model, int rows, int columns)
+    public GameViewModel(GameModel model)
     {
         _model = model;
 
-        Rows = rows;
-        Columns = columns;
+        Rows = model.Field.Value.GetLength(0);
+        Columns = model.Field.Value.GetLength(1);
         FieldView.Value = model.Field.Value;
 
-        _movingCellsViewModel = new MovingCellsViewModel(model, rows, columns);
-        _fallingCellsViewModel = new FallingCellsViewModel(model, rows, columns);
-        _combinatingCellsViewModel = new CombinatingCellsViewModel(model, rows, columns);
+        _movingCellsViewModel = new MovingCellsViewModel(model, Rows, Columns);
+        _fallingCellsViewModel = new FallingCellsViewModel(model, Rows, Columns);
+        _combinatingCellsViewModel = new CombinatingCellsViewModel(model, Rows, Columns);
 
         _model.Field.OnChanged += OnModelFieldChanged;
         _model.MoveCells.OnChanged += OnModelMoveCellsChanged;
