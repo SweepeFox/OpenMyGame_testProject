@@ -1,0 +1,41 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SwapCellsViewHandler
+{
+    private readonly List<MoveCellsViewParams> _cellsForSwap = new List<MoveCellsViewParams>();
+
+    public HandlerStatus Handle()
+    {
+        if (_cellsForSwap.Count == 0)
+        {
+            return HandlerStatus.NONE;
+        }
+
+        for (int i = _cellsForSwap.Count - 1; i >= 0; i--)
+        {
+            var data = _cellsForSwap[i];
+            var swapTime = Mathf.Clamp01((Time.time - data.StartTime) / data.Duration);
+
+            data.Cell1.transform.position = Vector3.Lerp(data.Cell1StartPosition, data.Cell2StartPosition, swapTime);
+            data.Cell2.transform.position = Vector3.Lerp(data.Cell2StartPosition, data.Cell1StartPosition, swapTime);
+
+            if (swapTime >= 1f)
+            {
+                _cellsForSwap.RemoveAt(i);
+
+                if (_cellsForSwap.Count == 0)
+                {
+                    return HandlerStatus.FINISHED;
+                }
+            }
+        }
+
+        return HandlerStatus.IN_PROGRESS;
+    }
+
+    public void AddCellsForSwap(MoveCellsViewParams newCellsForSwap)
+    {
+        _cellsForSwap.Add(newCellsForSwap);
+    }
+}
