@@ -7,6 +7,7 @@ using System.Linq;
 public class GameView : MonoBehaviour
 {
     private const float MOVE_CELL_DURATION = 0.25f;
+    private const float DESTROY_CELL_DURATION = 0.75f;
 
     [SerializeField] private float detectSwipeMinDistance;
 
@@ -40,7 +41,6 @@ public class GameView : MonoBehaviour
         _swalCellsHandler = new SwapCellsViewHandler();
         _destroyCellsHandler = new DestroyCellsViewHandler();
 
-        _viewModel.FieldView.OnChanged += OnFieldChanged;
         _viewModel.MoveCellsView.OnChanged += OnMoveCellsChanged;
         _viewModel.DestroyCellsView.OnChanged += OnDestroyCellsChanged;
         _swipeDetectorView.SwipeParams.OnChanged += OnSwipe;
@@ -74,11 +74,6 @@ public class GameView : MonoBehaviour
 
         _gamefieldView.DisableLayoutGroup();
         _viewModel.CheckFallingCells();
-    }
-
-    private void OnFieldChanged(int[,] value)
-    {
-
     }
 
     private void OnMoveCellsChanged(List<MoveCellParams> moveCells)
@@ -123,8 +118,10 @@ public class GameView : MonoBehaviour
                 {
                     Cell = cell,
                     StartTime = Time.time,
-                    Duration = 1f
+                    Duration = DESTROY_CELL_DURATION
                 });
+
+                cell.PlayDeathAnimation(DESTROY_CELL_DURATION);
             }
         }
     }
@@ -182,7 +179,6 @@ public class GameView : MonoBehaviour
 
     private void OnDestroy()
     {
-        _viewModel.FieldView.OnChanged -= OnFieldChanged;
         _viewModel.MoveCellsView.OnChanged -= OnMoveCellsChanged;
         _viewModel.DestroyCellsView.OnChanged -= OnDestroyCellsChanged;
         _swipeDetectorView.SwipeParams.OnChanged -= OnSwipe;

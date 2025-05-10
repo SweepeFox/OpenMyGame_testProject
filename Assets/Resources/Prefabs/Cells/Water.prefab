@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4016579379476941542}
   - component: {fileID: 6454577391883578450}
+  - component: {fileID: 8660789291153729944}
   - component: {fileID: 8328800746969008712}
   - component: {fileID: 1366448133399864634}
   m_Layer: 5
@@ -46,6 +47,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6221521928471836712}
   m_CullTransparentMesh: 1
+--- !u!95 &8660789291153729944
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6221521928471836712}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 90d6860f951088b40b8fb1276c898e65, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &8328800746969008712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,3 +110,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13871e59b77baa449249440e68905a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  breakAnimationName: Break

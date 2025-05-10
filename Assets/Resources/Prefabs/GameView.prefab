@@ -117,8 +117,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b80b313f30b1d46479096495632672e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _swipeDetectorView: {fileID: 6930285604402152407}
   detectSwipeMinDistance: 20
+  _swipeDetectorView: {fileID: 6930285604402152407}
   _gamefieldView: {fileID: 1032761490735013798}
 --- !u!1 &5609453708187114231
 GameObject:

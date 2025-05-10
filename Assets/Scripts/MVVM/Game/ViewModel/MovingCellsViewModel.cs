@@ -28,7 +28,7 @@ public class MovingCellsViewModel
                 column1--;
                 break;
             case SwipeDirection.UP:
-                if (row1 - 1 != 0)
+                if (row1 > 0 && _model.Field.Value[row1 - 1, column1] != 0)
                 {
                     row1--;
                 }
