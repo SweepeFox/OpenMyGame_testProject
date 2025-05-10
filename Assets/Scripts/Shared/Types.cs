@@ -58,3 +58,10 @@ public class SwipeParams
     public Vector2 startPosition;
     public SwipeDirection direction;
 }
+
+public class LevelParams
+{
+    public int rows;
+    public int columns;
+    public int[,] field;
+}
