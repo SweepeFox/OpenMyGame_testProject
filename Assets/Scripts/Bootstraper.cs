@@ -7,18 +7,21 @@ public class Bootstraper : MonoBehaviour
     [SerializeField] private CellsConfigData _cellsConfigData;
 
     private GameView _gameView;
+    private GameModel _gameModel;
     private GameUIView _gameUIView;
     private LevelLoader _levelLoader;
+    private DataSaver _dataSaver;
 
-    private int _currentLevelIndex = 0;
+    // private int _currentLevelIndex = 0;
+    private SaveData _saveData;
 
     public void Boot()
     {
-        var level = _levelLoader.LevelsData[_currentLevelIndex];
+        var level = _levelLoader.LevelsData[_saveData.level];
         var cellsFactory = new CellsFactory(_cellsConfigData);
 
-        var model = new GameModel(level.field);
-        var viewModel = new GameViewModel(model, NextLevel);
+        _gameModel = new GameModel(_saveData.field == null ? level.field : _saveData.field);
+        var viewModel = new GameViewModel(_gameModel, NextLevel);
 
         _gameView = Instantiate(_gameViewPrefab);
         _gameView.Init(viewModel, cellsFactory);
@@ -31,6 +34,8 @@ public class Bootstraper : MonoBehaviour
 
     public void Restart()
     {
+        _saveData.field = null;
+
         Destroy(_gameView.gameObject);
         Destroy(_gameUIView.gameObject);
 
@@ -39,7 +44,10 @@ public class Bootstraper : MonoBehaviour
 
     public void NextLevel()
     {
-        _currentLevelIndex = (_currentLevelIndex + 1) % _levelLoader.LevelsData.Length;
+        _saveData.level = (_saveData.level + 1) % _levelLoader.LevelsData.Length;
+        _saveData.field = null;
+
+        _dataSaver.Save(_saveData);
         Restart();
     }
 
@@ -49,19 +57,16 @@ public class Bootstraper : MonoBehaviour
         _levelLoader = new LevelLoader();
         await _levelLoader.LoadLevelsJson();
 
+        _dataSaver = new DataSaver();
+        _saveData = _dataSaver.Load();
+
         Boot();
     }
 
-    private void Update()
+    private void OnApplicationQuit()
     {
-        if (Input.GetKeyUp(KeyCode.R))
-        {
-            Restart();
-        }
-        else if (Input.GetKeyUp(KeyCode.N))
-        {
-            NextLevel();
-        }
+        _saveData.field = _gameModel.Field.Value;
+        _dataSaver.Save(_saveData);
     }
     #endregion
 }

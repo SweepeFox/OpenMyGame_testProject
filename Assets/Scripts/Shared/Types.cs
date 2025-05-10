@@ -63,3 +63,9 @@ public class LevelParams
 {
     public int[,] field;
 }
+
+public class SaveData
+{
+    public int level;
+    public int[,] field;
+}
