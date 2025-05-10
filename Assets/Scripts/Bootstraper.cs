@@ -11,8 +11,6 @@ public class Bootstraper : MonoBehaviour
     private GameUIView _gameUIView;
     private LevelLoader _levelLoader;
     private DataSaver _dataSaver;
-
-    // private int _currentLevelIndex = 0;
     private SaveData _saveData;
 
     public void Boot()
