@@ -12,6 +12,7 @@ public class CellView : MonoBehaviour
 
     private Image _image;
     private Animator _animator;
+    public RectTransform Rect { get; private set; }
 
     public int Row => _viewModel.RowView.Value;
     public int Column => _viewModel.ColumnView.Value;
@@ -22,6 +23,7 @@ public class CellView : MonoBehaviour
 
         _image = GetComponent<Image>();
         _animator = GetComponent<Animator>();
+        Rect = GetComponent<RectTransform>();
 
         _interactionZone?.Init(this);
     }

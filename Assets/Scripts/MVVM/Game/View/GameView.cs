@@ -65,7 +65,7 @@ public class GameView : MonoBehaviour
 
        foreach (var cell in _cells)
         {
-            _gamefieldView.CellsPositions[cell.Row, cell.Column] = cell.transform.position;
+            _gamefieldView.CellsPositions[cell.Row, cell.Column] = cell.Rect.anchoredPosition;// cell.transform.position;
         }
 
         _gamefieldView.DisableLayoutGroup();

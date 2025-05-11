@@ -33,8 +33,11 @@ public class SwipeDetectorViewModel
         var deltaPosition = currentPosition - _previousPosition;
         _previousPosition = currentPosition;
 
+        var screenRatio = Mathf.Max(Screen.width, Screen.height) /  Mathf.Min(Screen.width, Screen.height);
+        var swipeMinDistance = _model.DetectSwipeMinDistance.Value / screenRatio;
+
         var distanceFromStart = Vector2.Distance(_startPosition, position);
-        if (distanceFromStart > _model.DetectSwipeMinDistance.Value)
+        if (distanceFromStart > swipeMinDistance)
         {
             _model.SwipeParams.Value = new SwipeParams
             {

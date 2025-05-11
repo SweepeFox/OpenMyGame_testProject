@@ -18,8 +18,8 @@ public class SwapCellsViewHandler
             var data = _cellsForSwap[i];
             var swapTime = Mathf.Clamp01((Time.time - data.StartTime) / data.Duration);
 
-            data.Cell1.transform.position = Vector3.Lerp(data.Cell1StartPosition, data.Cell2StartPosition, swapTime);
-            data.Cell2.transform.position = Vector3.Lerp(data.Cell2StartPosition, data.Cell1StartPosition, swapTime);
+            data.Cell1.Rect.anchoredPosition = Vector3.Lerp(data.Cell1StartPosition, data.Cell2StartPosition, swapTime);
+            data.Cell2.Rect.anchoredPosition = Vector3.Lerp(data.Cell2StartPosition, data.Cell1StartPosition, swapTime);
 
             if (swapTime >= 1f)
             {
