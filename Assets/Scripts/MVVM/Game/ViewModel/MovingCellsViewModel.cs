@@ -53,7 +53,6 @@ public class MovingCellsViewModel
         var isCell2Destroying = _model.DestroyCells.Value != null && _model.DestroyCells.Value.Exists(x => x.row == row1 && x.column == column1);    
         if (isCell2Destroying)
         {
-            Debug.Log("cell2 destroying");
             return null;
         }
 
