@@ -268,7 +268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b80b313f30b1d46479096495632672e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectSwipeMinDistance: 100
   _swipeDetectorView: {fileID: 6930285604402152407}
   _gamefieldView: {fileID: 1032761490735013798}
 --- !u!1 &2768400564118864708
@@ -633,6 +632,7 @@ GameObject:
   - component: {fileID: 8725575411696537736}
   - component: {fileID: 7927236662340106737}
   - component: {fileID: 4552371135287429200}
+  - component: {fileID: 4169111347509764748}
   - component: {fileID: 8384556734531412346}
   m_Layer: 2
   m_Name: StaticBackground
@@ -701,6 +701,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4169111347509764748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7240143638967159716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
 --- !u!114 &8384556734531412346
 MonoBehaviour:
   m_ObjectHideFlags: 0

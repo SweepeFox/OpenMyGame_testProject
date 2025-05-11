@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
+[RequireComponent(typeof (RectTransform))]
 public class BackgroundView : MonoBehaviour
 {
     [SerializeField] private List<BalloonView> _balloons;
@@ -23,8 +24,12 @@ public class BackgroundView : MonoBehaviour
     [SerializeField] private float _minBalloonFrequency = 1f;
     [SerializeField] private float _maxBalloonFrequency = 10f;
 
+    private RectTransform _rectTransform;
+
     private void Start()
     {
+        _rectTransform = GetComponent<RectTransform>();
+
         _balloons.ForEach(balloon => {
             InitBalloon(balloon);
         });
@@ -34,13 +39,16 @@ public class BackgroundView : MonoBehaviour
     {
         balloon.Init(_balloonSprites[Random.Range(0, _balloonSprites.Count)], Random.Range(_minBalloonScale, _maxBalloonScale));
 
-        var leftSpawnPositionX = -balloon.rectTransform.rect.width / 2 * balloon.transform.localScale.x;
-        var rightSpawnPositionX = Screen.width - leftSpawnPositionX;
+        var balloonRectWidthHalf = balloon.rectTransform.rect.width * balloon.transform.localScale.x / 2;
+        var balloonRectHeightHalf = balloon.rectTransform.rect.height * balloon.transform.localScale.y / 2;
+
+        var leftSpawnPositionX = -_rectTransform.rect.width / 2 - balloonRectWidthHalf;
+        var rightSpawnPositionX = _rectTransform.rect.width / 2 + balloonRectWidthHalf;
         var isLeft = Random.Range(0, 2) == 0;
 
-        balloon.rectTransform.position = new Vector2(
+        balloon.rectTransform.anchoredPosition = new Vector2(
             x: isLeft ? leftSpawnPositionX : rightSpawnPositionX,
-            y: Random.Range(Screen.height / 2, Screen.height - balloon.rectTransform.rect.height / 2)
+            y: Random.Range(0, _rectTransform.rect.height / 2 - balloonRectHeightHalf)
         );
 
         var targetPositionX = isLeft ? rightSpawnPositionX : leftSpawnPositionX;
@@ -49,7 +57,7 @@ public class BackgroundView : MonoBehaviour
         var moveFrequency = Random.Range(_minBalloonFrequency, _maxBalloonFrequency);
 
         var initialAnchoredY = balloon.rectTransform.anchoredPosition.y;
-        balloon.rectTransform.DOMoveX(targetPositionX, moveDuration)
+        balloon.rectTransform.DOAnchorPosX(targetPositionX, moveDuration)
             .SetEase(Ease.Linear)
             .OnUpdate(() => {
                 balloon.rectTransform.anchoredPosition = new Vector2(
