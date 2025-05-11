@@ -23,7 +23,7 @@ public class CellView : MonoBehaviour
         _image = GetComponent<Image>();
         _animator = GetComponent<Animator>();
 
-        _interactionZone.Init(this);
+        _interactionZone?.Init(this);
     }
 
     public void SetGamefieldPosition(int row, int column)
@@ -34,6 +34,12 @@ public class CellView : MonoBehaviour
     public void Break()
     {
         _image.enabled = false;
+
+        if (_interactionZone != null)
+        {
+            Destroy(_interactionZone.gameObject);
+            _interactionZone = null;
+        }
     }
 
     public void PlayDeathAnimation(float duration)
