@@ -61,4 +61,11 @@ public class BackgroundView : MonoBehaviour
                 InitBalloon(balloon);
             });
     }
+
+    private void OnDestroy()
+    {
+        _balloons.ForEach(balloon => {
+            DOTween.Kill(balloon.rectTransform);
+        });
+    }
 }
