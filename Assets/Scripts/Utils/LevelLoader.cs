@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine.Networking;
 using System.Collections;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -21,26 +20,11 @@ public class LevelLoader
 
     public async Task LoadLevelsJson()
     {
-        UnityWebRequest www = UnityWebRequest.Get(PATH_TO_LEVELS_JSON);
-        AsyncOperation asyncOp = www.SendWebRequest();
+        string json = await File.ReadAllTextAsync(PATH_TO_LEVELS_JSON);
 
-        while (!asyncOp.isDone)
+        using (JsonTextReader jsonReader = new JsonTextReader(new StringReader(json)))
         {
-            await Task.Yield();
-        }
-
-        if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
-        {
-            Debug.Log(www.error);
-        }
-        else
-        {
-            string json = www.downloadHandler.text;
-
-            using (JsonTextReader jsonReader = new JsonTextReader(new StringReader(json)))
-            {
-                LevelsData = new JsonSerializer().Deserialize<LevelParams[]>(jsonReader);
-            }
+            LevelsData = new JsonSerializer().Deserialize<LevelParams[]>(jsonReader);
         }
     }
 }
