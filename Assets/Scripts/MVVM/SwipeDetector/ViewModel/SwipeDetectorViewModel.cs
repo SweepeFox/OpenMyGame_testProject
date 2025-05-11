@@ -29,17 +29,9 @@ public class SwipeDetectorViewModel
         _isSwiping = true;
     }
 
-    public void EndSwipe()
+    public void EndSwipe(Vector2 position)
     {
         _isSwiping = false;
-    }
-
-    public void MoveSwipe(Vector2 position)
-    {
-        if (!_isSwiping)
-        {
-            return;
-        }
 
         var currentPosition = position;
         var deltaPosition = currentPosition - _previousPosition;

@@ -1,7 +1,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class SwipeDetectorView : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerMoveHandler
+public class SwipeDetectorView : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private SwipeDetectorViewModel _viewModel;
     public ReactiveProperty<SwipeParams> SwipeParams => _viewModel.SwipeParamsView;
@@ -18,12 +18,7 @@ public class SwipeDetectorView : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        _viewModel.EndSwipe();
-    }
-
-    public void OnPointerMove(PointerEventData eventData)
-    {
-        _viewModel.MoveSwipe(eventData.position);
+        _viewModel.EndSwipe(eventData.position);
     }
 
     private void OnDestroy()

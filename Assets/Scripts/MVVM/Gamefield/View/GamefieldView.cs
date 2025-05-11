@@ -11,19 +11,20 @@ public class GamefieldView : MonoBehaviour
     private GamefieldViewModel _viewModel;
 
     public Vector2[,] CellsPositions => _viewModel.CellsPositionsView.Value;
+    public float CellSize { get; private set; }
 
     public void Init(int rows, int columns, GamefieldViewModel viewModel)
     {
         _gridLayoutGroup = GetComponent<GridLayoutGroup>();
         _viewModel = viewModel;
 
-        var cellSize = DEFAULT_GAMEFIELD_SIZE / columns;
-        var spacing = cellSize * DEFAULT_BLOCK_SPACING / DEFAULT_BLOCK_SIZE;
+        CellSize = DEFAULT_GAMEFIELD_SIZE / columns;
+        var spacing = CellSize * DEFAULT_BLOCK_SPACING / DEFAULT_BLOCK_SIZE;
 
-        var totalWidth = cellSize * columns + spacing * (columns - 1);
+        var totalWidth = CellSize * columns + spacing * (columns - 1);
         var scaleFactor = DEFAULT_GAMEFIELD_SIZE / totalWidth;
 
-        var desiredCellSize = cellSize / scaleFactor;
+        var desiredCellSize = CellSize / scaleFactor;
         var desiredSpacing = spacing / scaleFactor;
 
         _gridLayoutGroup.cellSize = new Vector2(Mathf.Ceil(desiredCellSize), Mathf.Ceil(desiredCellSize));

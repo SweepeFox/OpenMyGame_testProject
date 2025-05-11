@@ -9,8 +9,6 @@ public class GameView : MonoBehaviour
     private const float MOVE_CELL_DURATION = 0.25f;
     private const float DESTROY_CELL_DURATION = 0.75f;
 
-    [SerializeField] private float detectSwipeMinDistance;
-
     [SerializeField] private SwipeDetectorView _swipeDetectorView;
     [SerializeField] private GamefieldView _gamefieldView;
 
@@ -32,7 +30,7 @@ public class GameView : MonoBehaviour
         var gamefieldViewModel = new GamefieldViewModel(gamefieldModel);
         _gamefieldView.Init(_viewModel.Rows, _viewModel.Columns, gamefieldViewModel);
 
-        var swipeDetectorModel = new SwipeDetectorModel(detectSwipeMinDistance);
+        var swipeDetectorModel = new SwipeDetectorModel(_gamefieldView.CellSize / 2);
         var swipeDetectorViewModel = new SwipeDetectorViewModel(swipeDetectorModel);
         _swipeDetectorView.Init(swipeDetectorViewModel);
 
