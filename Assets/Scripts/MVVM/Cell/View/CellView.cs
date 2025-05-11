@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(Image))]
 public class CellView : MonoBehaviour
 {
+    [SerializeField] private CellViewInteractionZone _interactionZone;
+
     private const string BREAK_ANIMATION_NAME = "Break";
 
     private CellViewModel _viewModel;
@@ -20,6 +22,8 @@ public class CellView : MonoBehaviour
 
         _image = GetComponent<Image>();
         _animator = GetComponent<Animator>();
+
+        _interactionZone.Init(this);
     }
 
     public void SetGamefieldPosition(int row, int column)

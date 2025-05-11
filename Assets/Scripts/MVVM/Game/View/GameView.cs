@@ -141,9 +141,9 @@ public class GameView : MonoBehaviour
         {
             if (result.gameObject.layer != LayerMask.NameToLayer("Ignore Raycast"))
             {
-                if (result.gameObject.TryGetComponent(out CellView cell))
+                if (result.gameObject.TryGetComponent(out CellViewInteractionZone cellViewInteractionZone))
                 {
-                    _viewModel.MoveCell(cell, swipeParams.direction);
+                    _viewModel.MoveCell(cellViewInteractionZone.CellView, swipeParams.direction);
                     break;
                 }
             }
