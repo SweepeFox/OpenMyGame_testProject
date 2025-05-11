@@ -16,14 +16,12 @@ public class MovingCellsViewModel
 
     public List<MoveCellParams> MoveCell(CellView cell, SwipeDirection direction)
     {
-        // note: if cell is empty (broken) or already moving, return null
-        var isCell1Destroying = _model.DestroyCells.Value != null && _model.DestroyCells.Value.Exists(x => x.row == cell.Row && x.column == cell.Column);
-        if (isCell1Destroying)
+        if (_model.IsDestroying(cell.Row, cell.Column))
         {
             return null;
         }
 
-        if (IsMovingCell(cell.Row, cell.Column))
+        if (_model.IsMoving(cell.Row, cell.Column))
         {
             return null;
         }
@@ -49,9 +47,13 @@ public class MovingCellsViewModel
                 row1++;
                 break;
         }
-
-        var isCell2Destroying = _model.DestroyCells.Value != null && _model.DestroyCells.Value.Exists(x => x.row == row1 && x.column == column1);    
-        if (isCell2Destroying)
+    
+        if (_model.IsDestroying(row1, column1))
+        {
+            return null;
+        }
+        
+        if (_model.IsMoving(row1, column1))
         {
             return null;
         }
@@ -63,11 +65,6 @@ public class MovingCellsViewModel
         }
 
         if (row1 == cell.Row && column1 == cell.Column)
-        {
-            return null;
-        }
-
-        if (IsMovingCell(row1, column1))
         {
             return null;
         }
@@ -90,18 +87,5 @@ public class MovingCellsViewModel
                 columnIndex2 = column1
             }
         };
-    }
-
-    private bool IsMovingCell(int row, int column)
-    {
-        if (_model.MoveCells.Value == null)
-        {
-            return false;
-        }
-
-        return _model.MoveCells.Value.Exists(x => 
-            x.rowIndex1 == row && x.columnIndex1 == column ||
-            x.rowIndex2 == row && x.columnIndex2 == column
-        );
     }
 }

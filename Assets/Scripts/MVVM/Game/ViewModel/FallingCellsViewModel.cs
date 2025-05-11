@@ -33,6 +33,11 @@ public class FallingCellsViewModel
                     continue;
                 }
 
+                if (_model.IsDestroying(row, column) || _model.IsDestroying(row - 1, column))
+                {
+                    continue;
+                }
+
                 moveCells.Add(new MoveCellParams()
                 {
                     rowIndex1 = row,

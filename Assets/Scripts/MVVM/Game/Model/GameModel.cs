@@ -11,4 +11,14 @@ public class GameModel
     {
         Field.Value = field;
     }
+
+    public bool IsMoving(int row, int column)
+    {
+        return MoveCells.Value != null && MoveCells.Value.Exists(x => x.rowIndex1 == row && x.columnIndex1 == column || x.rowIndex2 == row && x.columnIndex2 == column);
+    }
+
+    public bool IsDestroying(int row, int column)
+    {
+        return DestroyCells.Value != null && DestroyCells.Value.Exists(x => x.row == row && x.column == column);
+    }
 }
