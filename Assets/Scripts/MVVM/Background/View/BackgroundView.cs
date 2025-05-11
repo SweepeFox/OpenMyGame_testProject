@@ -40,7 +40,7 @@ public class BackgroundView : MonoBehaviour
 
         balloon.rectTransform.position = new Vector2(
             x: isLeft ? leftSpawnPositionX : rightSpawnPositionX,
-            y: Random.Range(Screen.height / 2, Screen.height - balloon.rectTransform.rect.height)
+            y: Random.Range(Screen.height / 2, Screen.height - balloon.rectTransform.rect.height / 2)
         );
 
         var targetPositionX = isLeft ? rightSpawnPositionX : leftSpawnPositionX;
@@ -48,12 +48,13 @@ public class BackgroundView : MonoBehaviour
         var moveAmplitude = Random.Range(_minBalloonAmplitude, _maxBalloonAmplitude);
         var moveFrequency = Random.Range(_minBalloonFrequency, _maxBalloonFrequency);
 
+        var initialAnchoredY = balloon.rectTransform.anchoredPosition.y;
         balloon.rectTransform.DOMoveX(targetPositionX, moveDuration)
             .SetEase(Ease.Linear)
             .OnUpdate(() => {
                 balloon.rectTransform.anchoredPosition = new Vector2(
                     balloon.rectTransform.anchoredPosition.x,
-                    Mathf.Sin(Time.time * moveFrequency) * moveAmplitude
+                    initialAnchoredY + Mathf.Sin(Time.time * moveFrequency) * moveAmplitude
                 );
             })
             .OnComplete(() => {

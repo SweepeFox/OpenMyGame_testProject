@@ -162,7 +162,7 @@ public class GameView : MonoBehaviour
             }
         }
 
-        var destroyCellsStatus = _destroyCellsHandler.Handle();
+        var destroyCellsStatus = _destroyCellsHandler.Handle(_viewModel);
         if (destroyCellsStatus == HandlerStatus.FINISHED)
         {
             var notEmptyBlocksCount = 0;

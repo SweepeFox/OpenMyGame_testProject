@@ -86,6 +86,11 @@ public class GameViewModel
         _model.MoveCells.Value.RemoveAll(x => x.rowIndex1 == row && x.columnIndex1 == column);
     }
 
+    public void RemoveDestroyingCellFromModel(int row, int column)
+    {
+        _model.DestroyCells.Value.RemoveAll(x => x.row == row && x.column == column);
+    }
+
     public void OnLevelCompleted()
     {
         _onLevelCompletedCallback?.Invoke();

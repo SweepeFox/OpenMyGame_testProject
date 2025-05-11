@@ -5,7 +5,7 @@ public class DestroyCellsViewHandler
 {
     private readonly List<DestroyCellViewParams> _cellsForDestroy = new List<DestroyCellViewParams>();
 
-    public HandlerStatus Handle()
+    public HandlerStatus Handle(GameViewModel viewModel)
     {
         if (_cellsForDestroy.Count == 0)
         {
@@ -21,6 +21,8 @@ public class DestroyCellsViewHandler
             {
                 data.Cell.Break();
                 _cellsForDestroy.RemoveAt(i);
+
+                viewModel.RemoveDestroyingCellFromModel(data.Cell.Row, data.Cell.Column);
 
                 if (_cellsForDestroy.Count == 0)
                 {
