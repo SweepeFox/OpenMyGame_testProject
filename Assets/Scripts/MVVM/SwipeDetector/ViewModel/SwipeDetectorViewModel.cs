@@ -8,7 +8,6 @@ public class SwipeDetectorViewModel
 
     private Vector2 _startPosition;
     private Vector2 _previousPosition;
-    private bool _isSwiping;
 
     public SwipeDetectorViewModel(SwipeDetectorModel model)
     {
@@ -26,13 +25,10 @@ public class SwipeDetectorViewModel
     {
         _startPosition = position;
         _previousPosition = _startPosition;
-        _isSwiping = true;
     }
 
     public void EndSwipe(Vector2 position)
     {
-        _isSwiping = false;
-
         var currentPosition = position;
         var deltaPosition = currentPosition - _previousPosition;
         _previousPosition = currentPosition;
@@ -45,8 +41,6 @@ public class SwipeDetectorViewModel
                 startPosition = position - deltaPosition,
                 direction = GetSwipeDirection(deltaPosition)
             };
-
-            _isSwiping = false;
         }
     }
 
